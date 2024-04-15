@@ -1,6 +1,9 @@
 extends RigidBody2D
 
 var power = 300
+@onready var flame = $flame
+var flameDistanceFromPlayer = 60
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -8,6 +11,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var movement = Vector2(0,0)
+	var finalPower = 0
 	if (Input.is_action_pressed("w")):
 		movement.y = -1
 	elif (Input.is_action_pressed("s")):
@@ -16,9 +20,23 @@ func _process(delta):
 		movement.x = -1
 	elif (Input.is_action_pressed("d")):
 		movement.x = 1
-	apply_central_impulse(movement * power * delta)
+	movement = movement.normalized()
+	finalPower = movement * power * delta
+	apply_central_impulse(finalPower)
+	if finalPower == Vector2(0, 0):
+		hideFlame()
+	else:
+		showFlame(movement)
 	
 	if (Input.is_action_pressed("space")):
 		linear_damp = 0.5
 	else:
 		linear_damp = 0
+
+func hideFlame():
+	flame.visible = false
+
+func showFlame(directionVector):
+	flame.visible = true
+	flame.position = -1 * directionVector * flameDistanceFromPlayer
+	flame.rotation = directionVector.angle() - (PI/2)

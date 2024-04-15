@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bi0r4pda2ixlg"]
+[gd_scene load_steps=6 format=3 uid="uid://bi0r4pda2ixlg"]
 
 [ext_resource type="Script" path="res://Scenes/Game/Player/player.gd" id="1_6ylkb"]
 [ext_resource type="Texture2D" uid="uid://bv5dw402gkxql" path="res://Resources/Art/PlayerSprite/playerShip.png" id="1_uq3yg"]
+[ext_resource type="Texture2D" uid="uid://cxeiwjh5dri7i" path="res://Resources/Art/PlayerSprite/flame.png" id="3_64774"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k87io"]
 friction = 0.0
@@ -18,10 +19,15 @@ linear_damp_mode = 1
 script = ExtResource("1_6ylkb")
 
 [node name="playerSprite" type="Sprite2D" parent="."]
-scale = Vector2(0.190461, 0.190461)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_uq3yg")
 
 [node name="playerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_torx5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="flame" type="Sprite2D" parent="."]
+position = Vector2(1, -75)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_64774")

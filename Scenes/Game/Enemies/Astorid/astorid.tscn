@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://kwe1t58uvq4r"]
+
+[ext_resource type="Script" path="res://Scenes/Game/Enemies/Astorid/astorid.gd" id="1_7x7im"]
+[ext_resource type="Texture2D" uid="uid://p3cp4iodyfj2" path="res://Resources/Art/EnemySprites/Astorids/Astorid.png" id="1_b21lg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3foed"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t1qym"]
+radius = 32.2701
+
+[node name="astorid" type="RigidBody2D"]
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_3foed")
+gravity_scale = 0.0
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = ExtResource("1_7x7im")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 0.96)
+shape = SubResource("CircleShape2D_t1qym")
+
+[node name="astoridSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.164287, 0.164287)
+texture = ExtResource("1_b21lg")

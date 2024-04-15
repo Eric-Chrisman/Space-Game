@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi0r4pda2ixlg"]
+
+[ext_resource type="Script" path="res://Scenes/Game/Player/player.gd" id="1_6ylkb"]
+[ext_resource type="Texture2D" uid="uid://bv5dw402gkxql" path="res://Resources/Art/PlayerSprite/playerShip.png" id="1_uq3yg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k87io"]
+friction = 0.0
+bounce = 0.7
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_torx5"]
+radius = 35.0
+
+[node name="player" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_k87io")
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp_mode = 1
+script = ExtResource("1_6ylkb")
+
+[node name="playerSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.190461, 0.190461)
+texture = ExtResource("1_uq3yg")
+
+[node name="playerCollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_torx5")
+
+[node name="Camera2D" type="Camera2D" parent="."]

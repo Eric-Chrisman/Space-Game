@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dhdxi14llpfbm"]
+[gd_scene load_steps=2 format=3 uid="uid://dhdxi14llpfbm"]
+
+[ext_resource type="Script" path="res://Scenes/Title/title.gd" id="1_u16yv"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,3 +9,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_u16yv")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Start Me!"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

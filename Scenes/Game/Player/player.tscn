@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi0r4pda2ixlg"]
+[gd_scene load_steps=10 format=3 uid="uid://bi0r4pda2ixlg"]
 
 [ext_resource type="Script" path="res://Scenes/Game/Player/player.gd" id="1_6ylkb"]
 [ext_resource type="Texture2D" uid="uid://bv5dw402gkxql" path="res://Resources/Art/PlayerSprite/playerShip.png" id="1_uq3yg"]
 [ext_resource type="Texture2D" uid="uid://cxeiwjh5dri7i" path="res://Resources/Art/PlayerSprite/flame.png" id="3_64774"]
+[ext_resource type="AudioStream" uid="uid://cyw67gue0s4ad" path="res://Resources/Sounds/shipDeath.wav" id="4_naw5b"]
+[ext_resource type="AudioStream" uid="uid://dm5oiywii8ur0" path="res://Resources/Sounds/shipThruster.wav" id="5_pfw1o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k87io"]
 friction = 0.0
@@ -10,6 +12,12 @@ bounce = 0.7
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_torx5"]
 radius = 35.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wuert"]
+size = Vector2(285, 361.662)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ogbsv"]
+radius = 37.1214
 
 [node name="player" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_k87io")
@@ -27,7 +35,32 @@ shape = SubResource("CircleShape2D_torx5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="flame" type="Sprite2D" parent="."]
-position = Vector2(1, -75)
-scale = Vector2(0.2, 0.2)
+[node name="flameHitBox" type="Area2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="flame" type="Sprite2D" parent="flameHitBox"]
+position = Vector2(-0.5, 1.77536)
+scale = Vector2(0.2, 0.606468)
 texture = ExtResource("3_64774")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="flameHitBox"]
+position = Vector2(-2.98023e-08, 0.390905)
+scale = Vector2(0.2, 0.606467)
+shape = SubResource("RectangleShape2D_wuert")
+
+[node name="playerHitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerHitBox"]
+shape = SubResource("CircleShape2D_ogbsv")
+
+[node name="death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_naw5b")
+volume_db = -5.0
+
+[node name="thruster" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pfw1o")
+
+[connection signal="area_entered" from="playerHitBox" to="." method="_on_player_hit_box_area_entered"]
+[connection signal="finished" from="thruster" to="." method="_on_thruster_finished"]

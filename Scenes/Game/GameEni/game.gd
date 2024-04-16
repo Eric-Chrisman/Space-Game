@@ -29,7 +29,6 @@ func loadPlayer():
 	add_child(player)
 
 func _on_respwan_astoid_timer_timeout():
-	print("tick")
 	spwanAstroid()
 
 func spwanAstroid():

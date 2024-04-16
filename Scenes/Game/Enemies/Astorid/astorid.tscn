@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://kwe1t58uvq4r"]
+[gd_scene load_steps=7 format=3 uid="uid://kwe1t58uvq4r"]
 
 [ext_resource type="Script" path="res://Scenes/Game/Enemies/Astorid/astorid.gd" id="1_7x7im"]
 [ext_resource type="Texture2D" uid="uid://p3cp4iodyfj2" path="res://Resources/Art/EnemySprites/Astorids/Astorid.png" id="1_b21lg"]
+[ext_resource type="AudioStream" uid="uid://rytc6n51nns8" path="res://Resources/Sounds/rockBreak.mp3" id="3_oafsx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3foed"]
 friction = 0.0
@@ -9,6 +10,9 @@ bounce = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t1qym"]
 radius = 32.2701
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i4ren"]
+radius = 37.663
 
 [node name="astorid" type="RigidBody2D"]
 mass = 5.0
@@ -25,3 +29,36 @@ shape = SubResource("CircleShape2D_t1qym")
 [node name="astoridSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.164287, 0.164287)
 texture = ExtResource("1_b21lg")
+
+[node name="hitBox" type="Area2D" parent="."]
+scale = Vector2(0.879999, 0.880001)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitBox"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_i4ren")
+disabled = true
+
+[node name="destory" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_oafsx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.172549, 0.172549, 0.172549, 0.619608)
+polygon = PackedVector2Array(-1, -31, -12, -28, -24, -19, -31, -5, -30, 9, -22, 22, -9, 29, 9, 29, 22, 21, 31, 8, 31, -6, 26, -19, 13, -28)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -12.0
+offset_right = 21.0
+offset_bottom = 11.0
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="hitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="finished" from="destory" to="." method="_on_destory_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
